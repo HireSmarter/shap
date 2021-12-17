@@ -133,21 +133,21 @@ def waterfall(shap_values, max_display=10, show=True):
             pos_inds.append(0)
             pos_widths.append(-remaining_impact)
             pos_lefts.append(loc + remaining_impact)
-            c = colors.red_rgb
+            c = colors.blue_rgb
         else:
             neg_inds.append(0)
             neg_widths.append(-remaining_impact)
             neg_lefts.append(loc + remaining_impact)
-            c = colors.blue_rgb
+            c = colors.red_rgb
 
     points = pos_lefts + list(np.array(pos_lefts) + np.array(pos_widths)) + neg_lefts + list(np.array(neg_lefts) + np.array(neg_widths))
     dataw = np.max(points) - np.min(points)
 
     # draw invisible bars just for sizing the axes
     label_padding = np.array([0.1*dataw if w < 1 else 0 for w in pos_widths])
-    plt.barh(pos_inds, np.array(pos_widths) + label_padding + 0.02*dataw, left=np.array(pos_lefts) - 0.01*dataw, color=colors.red_rgb, alpha=0)
+    plt.barh(pos_inds, np.array(pos_widths) + label_padding + 0.02*dataw, left=np.array(pos_lefts) - 0.01*dataw, color=colors.blue_rgb, alpha=0)
     label_padding = np.array([-0.1*dataw  if -w < 1 else 0 for w in neg_widths])
-    plt.barh(neg_inds, np.array(neg_widths) + label_padding - 0.02*dataw, left=np.array(neg_lefts) + 0.01*dataw, color=colors.blue_rgb, alpha=0)
+    plt.barh(neg_inds, np.array(neg_widths) + label_padding - 0.02*dataw, left=np.array(neg_lefts) + 0.01*dataw, color=colors.red_rgb, alpha=0)
 
     # define variable we need for plotting the arrows
     head_length = 0.08
@@ -168,7 +168,7 @@ def waterfall(shap_values, max_display=10, show=True):
         arrow_obj = plt.arrow(
             pos_lefts[i], pos_inds[i], max(dist-hl_scaled, 0.000001), 0,
             head_length=min(dist, hl_scaled),
-            color=colors.red_rgb, width=bar_width,
+            color=colors.blue_rgb, width=bar_width,
             head_width=bar_width
         )
 
@@ -176,7 +176,7 @@ def waterfall(shap_values, max_display=10, show=True):
             plt.errorbar(
                 pos_lefts[i] + pos_widths[i], pos_inds[i],
                 xerr=np.array([[pos_widths[i] - pos_low[i]], [pos_high[i] - pos_widths[i]]]),
-                ecolor=colors.light_red_rgb
+                ecolor=colors.light_blue_rgb
             )
 
         txt_obj = plt.text(
@@ -193,7 +193,7 @@ def waterfall(shap_values, max_display=10, show=True):
 
             txt_obj = plt.text(
                 pos_lefts[i] + (5/72)*bbox_to_xscale + dist, pos_inds[i], format_value(pos_widths[i], '%+0.02f'),
-                horizontalalignment='left', verticalalignment='center', color=colors.red_rgb,
+                horizontalalignment='left', verticalalignment='center', color=colors.blue_rgb,
                 fontsize=12
             )
 
@@ -204,7 +204,7 @@ def waterfall(shap_values, max_display=10, show=True):
         arrow_obj = plt.arrow(
             neg_lefts[i], neg_inds[i], -max(-dist-hl_scaled, 0.000001), 0,
             head_length=min(-dist, hl_scaled),
-            color=colors.blue_rgb, width=bar_width,
+            color=colors.red_rgb, width=bar_width,
             head_width=bar_width
         )
 
@@ -212,7 +212,7 @@ def waterfall(shap_values, max_display=10, show=True):
             plt.errorbar(
                 neg_lefts[i] + neg_widths[i], neg_inds[i],
                 xerr=np.array([[neg_widths[i] - neg_low[i]], [neg_high[i] - neg_widths[i]]]),
-                ecolor=colors.light_blue_rgb
+                ecolor=colors.light_red_rgb
             )
 
         txt_obj = plt.text(
@@ -229,7 +229,7 @@ def waterfall(shap_values, max_display=10, show=True):
 
             txt_obj = plt.text(
                 neg_lefts[i] - (5/72)*bbox_to_xscale + dist, neg_inds[i], format_value(neg_widths[i], '%+0.02f'),
-                horizontalalignment='right', verticalalignment='center', color=colors.blue_rgb,
+                horizontalalignment='right', verticalalignment='center', color=colors.red_rgb,
                 fontsize=12
             )
 
@@ -430,21 +430,21 @@ def waterfall_legacy(expected_value, shap_values=None, features=None, feature_na
             pos_inds.append(0)
             pos_widths.append(-remaining_impact)
             pos_lefts.append(loc + remaining_impact)
-            c = colors.red_rgb
+            c = colors.blue_rgb
         else:
             neg_inds.append(0)
             neg_widths.append(-remaining_impact)
             neg_lefts.append(loc + remaining_impact)
-            c = colors.blue_rgb
+            c = colors.red_rgb
 
     points = pos_lefts + list(np.array(pos_lefts) + np.array(pos_widths)) + neg_lefts + list(np.array(neg_lefts) + np.array(neg_widths))
     dataw = np.max(points) - np.min(points)
 
     # draw invisible bars just for sizing the axes
     label_padding = np.array([0.1*dataw if w < 1 else 0 for w in pos_widths])
-    plt.barh(pos_inds, np.array(pos_widths) + label_padding + 0.02*dataw, left=np.array(pos_lefts) - 0.01*dataw, color=colors.red_rgb, alpha=0)
+    plt.barh(pos_inds, np.array(pos_widths) + label_padding + 0.02*dataw, left=np.array(pos_lefts) - 0.01*dataw, color=colors.blue_rgb, alpha=0)
     label_padding = np.array([-0.1*dataw  if -w < 1 else 0 for w in neg_widths])
-    plt.barh(neg_inds, np.array(neg_widths) + label_padding - 0.02*dataw, left=np.array(neg_lefts) + 0.01*dataw, color=colors.blue_rgb, alpha=0)
+    plt.barh(neg_inds, np.array(neg_widths) + label_padding - 0.02*dataw, left=np.array(neg_lefts) + 0.01*dataw, color=colors.red_rgb, alpha=0)
 
     # define variable we need for plotting the arrows
     head_length = 0.08
@@ -465,7 +465,7 @@ def waterfall_legacy(expected_value, shap_values=None, features=None, feature_na
         arrow_obj = plt.arrow(
             pos_lefts[i], pos_inds[i], max(dist-hl_scaled, 0.000001), 0,
             head_length=min(dist, hl_scaled),
-            color=colors.red_rgb, width=bar_width,
+            color=colors.blue_rgb, width=bar_width,
             head_width=bar_width
         )
 
@@ -473,7 +473,7 @@ def waterfall_legacy(expected_value, shap_values=None, features=None, feature_na
             plt.errorbar(
                 pos_lefts[i] + pos_widths[i], pos_inds[i],
                 xerr=np.array([[pos_widths[i] - pos_low[i]], [pos_high[i] - pos_widths[i]]]),
-                ecolor=colors.light_red_rgb
+                ecolor=colors.light_blue_rgb
             )
 
         txt_obj = plt.text(
@@ -490,7 +490,7 @@ def waterfall_legacy(expected_value, shap_values=None, features=None, feature_na
 
             txt_obj = plt.text(
                 pos_lefts[i] + (5/72)*bbox_to_xscale + dist, pos_inds[i], format_value(pos_widths[i], '%+0.02f'),
-                horizontalalignment='left', verticalalignment='center', color=colors.red_rgb,
+                horizontalalignment='left', verticalalignment='center', color=colors.blue_rgb,
                 fontsize=12
             )
 
@@ -501,7 +501,7 @@ def waterfall_legacy(expected_value, shap_values=None, features=None, feature_na
         arrow_obj = plt.arrow(
             neg_lefts[i], neg_inds[i], -max(-dist-hl_scaled, 0.000001), 0,
             head_length=min(-dist, hl_scaled),
-            color=colors.blue_rgb, width=bar_width,
+            color=colors.red_rgb, width=bar_width,
             head_width=bar_width
         )
 
@@ -509,7 +509,7 @@ def waterfall_legacy(expected_value, shap_values=None, features=None, feature_na
             plt.errorbar(
                 neg_lefts[i] + neg_widths[i], neg_inds[i],
                 xerr=np.array([[neg_widths[i] - neg_low[i]], [neg_high[i] - neg_widths[i]]]),
-                ecolor=colors.light_blue_rgb
+                ecolor=colors.light_red_rgb
             )
 
         txt_obj = plt.text(
@@ -526,7 +526,7 @@ def waterfall_legacy(expected_value, shap_values=None, features=None, feature_na
 
             txt_obj = plt.text(
                 neg_lefts[i] - (5/72)*bbox_to_xscale + dist, neg_inds[i], format_value(neg_widths[i], '%+0.02f'),
-                horizontalalignment='right', verticalalignment='center', color=colors.blue_rgb,
+                horizontalalignment='right', verticalalignment='center', color=colors.red_rgb,
                 fontsize=12
             )
 
